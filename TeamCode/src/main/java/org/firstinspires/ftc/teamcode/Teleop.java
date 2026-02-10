@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp
-public class Driver_Controlled extends LinearOpMode {
+public class Teleop extends LinearOpMode {
     DrivetrainGO mecanum = new DrivetrainGO();
 
     private DcMotor Intake, Transfer;
@@ -37,6 +37,7 @@ public class Driver_Controlled extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+
         mecanum.init(hardwareMap);
         Intake = hardwareMap.get(DcMotor.class, "Intake");
         Transfer = hardwareMap.get(DcMotor.class, "Transfer");
@@ -52,9 +53,9 @@ public class Driver_Controlled extends LinearOpMode {
         waitForStart();
 
         // PID constants (TUNE THESE)
-        double kP = 0;
-        double kI = 0;
-        double kD = 0;
+        double kP = 0.0004;
+        double kI = 0.0000008;
+        double kD = 0.0005;
 
         double turretIntegral = 0;
         double turretLastError = 0;
@@ -62,7 +63,6 @@ public class Driver_Controlled extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-             Turret.setVelocityPIDFCoefficients(DashboardVariables.kP, DashboardVariables.kI, DashboardVariables.kD, DashboardVariables.kF);
 
             double turn = -gamepad1.left_stick_y;
             double strafe = gamepad1.left_stick_x;
@@ -127,7 +127,7 @@ public class Driver_Controlled extends LinearOpMode {
                 trianglePressed = !trianglePressed;
             }
             if (trianglePressed) {
-              /* double currentRPM = getTurretRPM();
+                double currentRPM = getTurretRPM();
                 double error = targetRPM - currentRPM;
 
                 long now = System.nanoTime();
@@ -139,16 +139,16 @@ public class Driver_Controlled extends LinearOpMode {
                 turretLastError = error;
 
                 double output =
-                        (DashboardVariables.kP * error) +
-                                (DashboardVariables.kI * turretIntegral) +
-                                (DashboardVariables.kD * derivative);
+                        (kP * error) +
+                                (kI * turretIntegral) +
+                                (kD * derivative);
 
                 output = Range.clip(output, 0, 1);
 
-                Turret.setPower(output);*/
+                Turret.setPower(output);
 
-               double targetTicksPerSecond = targetRPM * TICKS_PER_REV / 60.0;
-               Turret.setVelocity(targetTicksPerSecond);
+                /*double targetTicksPerSecond = targetRPM * TICKS_PER_REV / 60.0;
+                Turret.setVelocity(targetTicksPerSecond);*/
             } else {
                 //Turret.setVelocity(0);
                 Turret.setPower(0);
