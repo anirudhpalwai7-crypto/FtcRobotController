@@ -19,7 +19,7 @@ public class autoBlueNew extends LinearOpMode {
     DcMotor Intake, Turret, Transfer;
     private IMU imu;
     private Servo back_servo;
-    ElapsedTime time = new ElapsedTime();
+    ElapsedTime runtime = new ElapsedTime();
     static final double TICKS_REV = 537.7;
     static final double WHEEL_DIAMETER = 4.0945;
     static final double COUNTS_INCH = (TICKS_REV * 1) / (WHEEL_DIAMETER * 3.1415);
@@ -65,11 +65,12 @@ public class autoBlueNew extends LinearOpMode {
 
         imu.resetYaw();
 
-        driveStraight(0.5,21);
-        driveLeft(0.5,5);
+        //driving backwards
+        driveStraight(0.6,44 );
+        //driveLeft(0.5,5);
         stopDrive();
         //Transfer.setPower(-0.5);
-        while (opModeIsActive()) {
+        //while (opModeIsActive()) {
             double imuAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
            /* if (imuAngle < 18) {
                 front_left_motor.setPower(0.5);
@@ -84,45 +85,92 @@ public class autoBlueNew extends LinearOpMode {
                 front_right_motor.setPower(0);
             }*/
 
-            //driveBackward(-0.5,12);
 
-            //stopDrive();
 
-            if (opModeIsActive() && time.seconds() <3) {
-                Turret.setPower(-0.7);
-                back_servo.setPosition(0.25);
-            }
-            if (time.seconds() <= 10) {
-                Turret.setPower(-0.7);
-            }
-            if (time.seconds() >= 6 && time.seconds() <= 10) {
-                back_servo.setPosition((0));
-                Intake.setPower(-0.6);
-                Transfer.setPower(-1.0);
-            } if (time.seconds() > 10 && time.seconds() <= 12) {
+           /* if (time.seconds() > 10 && time.seconds() <= 12) {
                 Turret.setPower(0);
                 front_left_motor.setPower(-0.5);
                 back_left_motor.setPower(-0.5);
                 back_right_motor.setPower(-0.5);
-                front_right_motor.setPower(-0.5);
+                front_right_motor.setPower(-0.5); */
+        //back_servo.setPosition(1);
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() < 5) {
+
+            Turret.setPower(-0.67);
+
+            if (runtime.seconds() >= 4) {
+                Intake.setPower(-0.8);
+                Transfer.setPower(-0.6);
             }
+        }
+
 
             telemetry.addData("Yaw:", imuAngle);
             telemetry.addData("ShooterRPM:", Turret.getMotorType().getMaxRPM() * Turret.getPower());
             telemetry.update();
 
+        // Feed for 4 seconds
+        sleep(4000);
 
-            idle();
+    // Stop everything
+        Turret.setPower(0);
+       // Intake.setPower(0);
+        Transfer.setPower(0);
+        //back_servo.setPosition(1);
+
+           // driveLeft(0.5, 24);   // strafe left 24 inches
+        driveRight(0.5, 14.5);
             stopDrive();
 
+        //collecting artifacts
+        //Intake.setPower(-0.8);
+
+        driveStraight(-0.6,-40);
+
+        if (runtime.seconds() <= 1)
+            Transfer.setPower(-0.4);
+
+        //Intake.setPower(0);
+        Transfer.setPower(0);
+        //driveLeft(0.5,5);
+        stopDrive();
+
+        sleep(1000);
+
+        driveStraight(0.6,36);
+        stopDrive();
+
+        driveLeft(0.5, 14.5);
+        stopDrive();
+
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() < 5) {
+            Turret.setPower(-0.67);
+            if (runtime.seconds() >= 5) {
+                Intake.setPower(-0.8);
+                //Transfer.setPower(-0.4);
+            }
+            if (runtime.seconds() >= 2.5 && runtime.seconds() <= 3.5 ) {
+               // Intake.setPower(-0.8);
+                Transfer.setPower(-0.6);
+            }
         }
 
-        //driveRight(0.5, 12);   // strafe right 12 inches
-        //stopDrive();
+        sleep(2000);
 
-        driveLeft(0.5, 24);   // strafe left 24 inches
+        Turret.setPower(0);
+        Intake.setPower(0);
+        Transfer.setPower(0);
+
+        driveRight(0.5, 8);
         stopDrive();
-        telemetry.update();
+
+        driveStraight(-0.6,-30);
+        stopDrive();
+        Intake.setPower(0);
+
+        // telemetry.update();
     }
 
     public void driveStraight(double power, double inches) {
@@ -137,8 +185,8 @@ public class autoBlueNew extends LinearOpMode {
         setDriveTarget(
                 ticks,      // front left
                 -ticks,     // front right
-                -ticks,     // back left
-                ticks       // back right
+                ticks,     // back left
+                -ticks       // back right
         );
 
         runToPosition(power, 3);
@@ -150,8 +198,8 @@ public class autoBlueNew extends LinearOpMode {
         setDriveTarget(
                 -ticks,     // front left
                 ticks,      // front right
-                ticks,      // back left
-                -ticks      // back right
+                -ticks,      // back left
+                ticks      // back right
         );
 
         runToPosition(power, 3);
@@ -160,8 +208,8 @@ public class autoBlueNew extends LinearOpMode {
     public void setDriveTarget(int lf, int rf, int lb, int rb) {
         front_left_motor.setTargetPosition(front_left_motor.getCurrentPosition() + lf);
         front_right_motor.setTargetPosition(front_right_motor.getCurrentPosition() + rf);
-        back_left_motor.setTargetPosition(back_left_motor.getCurrentPosition() + lf);
-        back_right_motor.setTargetPosition(back_right_motor.getCurrentPosition() + rf);
+        back_left_motor.setTargetPosition(back_left_motor.getCurrentPosition() + lb);
+        back_right_motor.setTargetPosition(back_right_motor.getCurrentPosition() + rb);
 
     }
 
