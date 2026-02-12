@@ -89,7 +89,7 @@ public class AutoBlueFinal extends LinearOpMode {
         Transfer.setPower(0);
 
         //start driving right to collect balls
-        driveLeft(0.5, 14.5);
+        driveLeft(0.5, 15);
         stopDrive();
 
         driveStraight(-0.6,-40);
@@ -127,7 +127,7 @@ public class AutoBlueFinal extends LinearOpMode {
         driveLeft(0.5, 8);
         stopDrive();
 
-        driveStraight(-0.6,-30);
+        driveStraight(-0.6,-32);
         stopDrive();
         Intake.setPower(0);
 

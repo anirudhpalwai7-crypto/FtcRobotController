@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @Autonomous
-public class autoRed extends LinearOpMode {
+public class Leave extends LinearOpMode {
     DcMotorEx front_left_motor, back_left_motor, back_right_motor, front_right_motor;
     DcMotor Intake, Turret, Transfer;
     private IMU imu;
@@ -87,7 +87,7 @@ public class autoRed extends LinearOpMode {
 
             //stopDrive();
 
-            if (opModeIsActive() && time.seconds() <3) {
+            /*if (opModeIsActive() && time.seconds() <3) {
                 Turret.setPower(-0.7);
                 back_servo.setPosition(0.25);
             }
@@ -105,7 +105,7 @@ public class autoRed extends LinearOpMode {
                 back_left_motor.setPower(-0.5);
                 back_right_motor.setPower(-0.5);
                 front_right_motor.setPower(-0.5);
-            }
+            }*/
 
             telemetry.addData("Yaw:", imuAngle);
             telemetry.addData("ShooterRPM:", Turret.getMotorType().getMaxRPM() * Turret.getPower());
@@ -120,8 +120,8 @@ public class autoRed extends LinearOpMode {
         //driveRight(0.5, 12);   // strafe right 12 inches
         //stopDrive();
 
-        driveLeft(0.5, 24);   // strafe left 24 inches
-        stopDrive();
+        //driveLeft(0.5, 24);   // strafe left 24 inches
+        //stopDrive();
         telemetry.update();
     }
 

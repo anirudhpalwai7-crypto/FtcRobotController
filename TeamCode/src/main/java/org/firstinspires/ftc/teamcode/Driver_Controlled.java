@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -30,6 +31,8 @@ public class Driver_Controlled extends LinearOpMode {
 
     double speedExtra;
     static final double TICKS_PER_REV = 28.0;
+
+    private Limelight3A limelight;
 
     double getTurretRPM() {
         return Turret.getVelocity() * 60.0 / TICKS_PER_REV;
