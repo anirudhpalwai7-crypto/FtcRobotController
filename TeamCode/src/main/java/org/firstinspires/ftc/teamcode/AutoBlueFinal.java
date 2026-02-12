@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @Autonomous
-public class AutoRedFinal extends LinearOpMode {
+public class AutoBlueFinal extends LinearOpMode {
     DcMotorEx front_left_motor, back_left_motor, back_right_motor, front_right_motor;
     DcMotor Intake, Turret, Transfer;
     private IMU imu;
@@ -89,7 +89,7 @@ public class AutoRedFinal extends LinearOpMode {
         Transfer.setPower(0);
 
         //start driving right to collect balls
-        driveRight(0.5, 14.5);
+        driveLeft(0.5, 14.5);
         stopDrive();
 
         driveStraight(-0.6,-40);
@@ -106,7 +106,7 @@ public class AutoRedFinal extends LinearOpMode {
         driveStraight(0.6,36);
         stopDrive();
 
-        driveLeft(0.5, 14.5);
+        driveRight(0.5, 14.5);
         stopDrive();
 
         //shooting balls happen 2nd time
@@ -124,7 +124,7 @@ public class AutoRedFinal extends LinearOpMode {
         Transfer.setPower(0);
 
         //leave to park - turn right and go for 30 inch
-        driveRight(0.5, 8);
+        driveLeft(0.5, 8);
         stopDrive();
 
         driveStraight(-0.6,-30);
