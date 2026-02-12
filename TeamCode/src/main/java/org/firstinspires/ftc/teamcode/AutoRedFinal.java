@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 
 @Autonomous
-public class autoBlueNew extends LinearOpMode {
+public class AutoRedFinal extends LinearOpMode {
     DcMotorEx front_left_motor, back_left_motor, back_right_motor, front_right_motor;
     DcMotor Intake, Turret, Transfer;
     private IMU imu;
@@ -64,11 +64,12 @@ public class autoBlueNew extends LinearOpMode {
         if(isStopRequested()) return;
 
         imu.resetYaw();
-
+        Turret.setPower(-0.67);
         //driving backwards
         driveStraight(0.6,44 );
-        //driveLeft(0.5,5);
         stopDrive();
+        Intake.setPower(-0.9);
+
         //Transfer.setPower(-0.5);
         //while (opModeIsActive()) {
             double imuAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
@@ -86,21 +87,13 @@ public class autoBlueNew extends LinearOpMode {
             }*/
 
 
-
-           /* if (time.seconds() > 10 && time.seconds() <= 12) {
-                Turret.setPower(0);
-                front_left_motor.setPower(-0.5);
-                back_left_motor.setPower(-0.5);
-                back_right_motor.setPower(-0.5);
-                front_right_motor.setPower(-0.5); */
-        //back_servo.setPosition(1);
         runtime.reset();
-        while (opModeIsActive() && runtime.seconds() < 5) {
+        while (opModeIsActive() && runtime.seconds() < 4) {
 
-            Turret.setPower(-0.67);
+            //Turret.setPower(-0.67);
 
-            if (runtime.seconds() >= 4) {
-                Intake.setPower(-0.8);
+            if (runtime.seconds() >= 1) {
+                //Intake.setPower(-0.8);
                 Transfer.setPower(-0.6);
             }
         }
@@ -111,10 +104,10 @@ public class autoBlueNew extends LinearOpMode {
             telemetry.update();
 
         // Feed for 4 seconds
-        sleep(4000);
+        //sleep(1000);
 
     // Stop everything
-        Turret.setPower(0);
+      //  Turret.setPower(0);
        // Intake.setPower(0);
         Transfer.setPower(0);
         //back_servo.setPosition(1);
@@ -128,8 +121,8 @@ public class autoBlueNew extends LinearOpMode {
 
         driveStraight(-0.6,-40);
 
-        if (runtime.seconds() <= 1)
-            Transfer.setPower(-0.4);
+        if (runtime.seconds() <= 1.5)
+            Transfer.setPower(-0.5);
 
         //Intake.setPower(0);
         Transfer.setPower(0);
@@ -146,21 +139,18 @@ public class autoBlueNew extends LinearOpMode {
 
         runtime.reset();
         while (opModeIsActive() && runtime.seconds() < 5) {
-            Turret.setPower(-0.67);
-            if (runtime.seconds() >= 5) {
-                Intake.setPower(-0.8);
-                //Transfer.setPower(-0.4);
-            }
+            //Turret.setPower(-0.67);
+
             if (runtime.seconds() >= 2.5 && runtime.seconds() <= 3.5 ) {
                // Intake.setPower(-0.8);
                 Transfer.setPower(-0.6);
             }
         }
 
-        sleep(2000);
+        sleep(1000);
 
         Turret.setPower(0);
-        Intake.setPower(0);
+      //  Intake.setPower(0);
         Transfer.setPower(0);
 
         driveRight(0.5, 8);
